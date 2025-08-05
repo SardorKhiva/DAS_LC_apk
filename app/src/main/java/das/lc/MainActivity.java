@@ -5,47 +5,51 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
-
-    private WebView liteCartWebVIew;
-    public static final String LITE_CART_URL = "https://umidbek.uz/lc";
+    private WebView liteCartWebView;
+    private static final String LITE_CART_URL = "https://umidbek.uz/lc"; // sayt manzili
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        liteCartWebVIew = findViewById(R.id.liteCartWebView);
+        liteCartWebView = findViewById(R.id.liteCartWebView);
 
         // WebView sozlamalari
-        WebSettings webSettings = liteCartWebVIew.getSettings();
-        webSettings.setJavaScriptEnabled(true); // JS ni yoqish
-        webSettings.setDomStorageEnabled(true); // DOM ni yoqamiz
-        webSettings.setLoadWithOverviewMode(true); // umumiy ko'rinishini yuklash
-        webSettings.setUseWideViewPort(true); // Keng oynalarda ko'rishga ruxsat
+        WebSettings webSettings = liteCartWebView.getSettings();
+        webSettings.setJavaScriptEnabled(true); // JavaScript ni yoqish
+        webSettings.setDomStorageEnabled(true); // yaxshiroq moslashuvchanlik uchun DOM Storage ni yoqish
+//        webSettings.setLoadWithOverviewMode(true); // sahifani umumiy ko'rinishda yuklash
+//        webSettings.setUseWideViewPort(true); // keng oynada ko'rinishga ruxsat berish
 
-        // hammasi dastur ichida ishlashi uchun WebViewClien ni o'rnatish
-        liteCartWebVIew.setWebViewClient(new WebViewClient() {
+        // brauzerdamas dasturni o'zida qolsin
+        liteCartWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                // URL ni o'zi yuklashi uchun false qaytaramiz
+                // WebView URL ni o'zi yuklashi uchun false qilish
                 return false;
             }
         });
 
-        // sahifani yuklash
-        liteCartWebVIew.loadUrl(LITE_CART_URL);
-    }
+        // sayt url ni yuklash
+        liteCartWebView.loadUrl(LITE_CART_URL);
 
-    // orqaga qaytish funksionali
-
-    public void onBackPressedDispatcher() {
-        if (liteCartWebVIew.canGoBack()) {
-            liteCartWebVIew.goBack(); // agar tarixda oldingi sahifalar bo'lsa shunga qaytsin
-        } else {
-            super.getOnBackPressedDispatcher();  // aks holda dasturdan chiqsin
-        }
+        // --- OnBackPressedDispatcher orqali "orqaga" tugmasini ishlatish  ---
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if (liteCartWebView.canGoBack()) {
+                    liteCartWebView.goBack(); // agar oldin kirilgan sahifalar bo'lsa shunga qaytsin
+                } else {
+                    // agar bo'lmasa dasturdan chiqsin
+                    setEnabled(false); // sistemaniki ishlashi uchun buni o'chirish
+                    onBackPressed(); // sistema onBackPressed orqali chaqirib activity ni o'chiramiz
+                }
+            }
+        });
     }
 }

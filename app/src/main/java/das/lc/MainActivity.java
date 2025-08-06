@@ -1,5 +1,7 @@
 package das.lc;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -30,7 +32,15 @@ public class MainActivity extends AppCompatActivity {
         liteCartWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                // WebView URL ni o'zi yuklashi uchun false qilish
+                // URL telefonga murojaat qilishini tekshirish
+                if (url.startsWith("tel:")) {
+                    // Telefon qilish uchun Intent hosil qilish
+                    Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(url));
+                    startActivity(intent); // telefon qilish oynasini ochish
+                    return true; // agar URL qayta ishlangan bo'lsa true qaytarish
+                }
+
+                // agar URL telefon raqami bo'lmasa, WebView URL ni o'zi yuklashi uchun false qilish
                 return false;
             }
         });

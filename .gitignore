@@ -12,6 +12,70 @@
 /captures
 .externalNativeBuild
 .cxx
-local.properties
 /.idea/
 /app/release/
+
+gitignore
+# Created by Android Studio
+
+# Built application files
+*.apk
+*.aab
+*.ap_
+
+# Files for the ART/Dalvik VM
+*.dex
+
+# Java class files
+*.class
+
+# Generated files
+*/build/
+*/generated/
+
+# Local configuration files (sdk path, etc)
+local.properties
+
+# Log Files
+*.log
+
+# Android Studio Navigation editor files
+.navigation/
+
+# Android Studio captures folder
+captures/
+
+# IntelliJ
+.idea/workspace.xml
+.idea/libraries/
+.idea/navEditor.xml
+.idea/assetWizardSettings.xml # Сохраняет последние использованные настройки для Asset Studio
+
+# Gradle
+.gradle/
+build/ # Уже покрыто */build/, но для ясности можно оставить
+
+# Общие файлы ОС и редакторов
+.DS_Store # macOS
+Thumbs.db # Windows
+desktop.ini # Windows
+*.swp # Vim
+*~ # Резервные копии некоторых редакторов
+
+# Файлы зависимостей (они загружаются Gradle)
+# Не нужно добавлять *.jar или *.aar в git, если они являются зависимостями из Maven/Gradle
+
+# Ключи подписи и чувствительные данные
+*.jks
+*.keystore
+# Если у вас есть файлы с API ключами или другими секретами, которые не должны быть в репозитории,
+# добавьте их сюда. Часто их хранят в gradle.properties, который НЕ добавляется в VCS,
+# а создается шаблонный файл (например, gradle.properties.template).
+
+# Firebase (если используется google-services.json, но он должен быть в репозитории, если используется всеми)
+# Обычно google-services.json добавляется в репозиторий.
+# Но если у вас разные конфигурации для разных сред и вы не хотите публиковать прод,
+# то это может быть специфично для вашего workflow.
+
+# Heap dump files
+*.hprof
